@@ -47,7 +47,7 @@ This is hardly recommended that keeping backing-up your docs, always. For the se
 
 ### Working screenshot
 
-![all functions work](docs/docker-docusaurus-home.png)
+![homepage](docs/docusaurus2_homepage.png)
 
 ## How can I use this
 
