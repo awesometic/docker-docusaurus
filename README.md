@@ -43,7 +43,7 @@ But, as this is an alpha version, I put a automatic update trigger into this ima
 
 ### Keep backing-up your docs
 
-This is hardly recommended that keeping backing-up your docs, always. For the several reasons, like, this is currently alpha version, or this Docker image's corruption and/or not matured yet, or physically damage, ... You have to back-up your data into your safe place.
+This is highly recommended that keeping backing-up your docs, always. For the several reasons, like, this is currently alpha version, or this Docker image's corruption and/or not matured yet, or physically damage, ... You have to back-up your data into your safe place.
 
 ### Working screenshot
 
