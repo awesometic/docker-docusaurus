@@ -8,6 +8,8 @@ RUN apk add --no-cache \
     autoconf automake build-base libtool nasm
 
 # Environments
+ENV TARGET_UID=1000
+ENV TARGET_GID=1000
 ENV AUTO_UPDATE='true'
 ENV WEBSITE_NAME='MyWebsite'
 ENV TEMPLATE='classic'

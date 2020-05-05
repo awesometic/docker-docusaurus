@@ -19,6 +19,8 @@ WEB_SRC_PATH="$DOCU_PATH"/website
 AUTO_UPD_CRONTAB_PATH="/auto_update_crontab.txt"
 
 echo -e "Variables:
+\\t- UID=${TARGET_UID}
+\\t- GID=${TARGET_GID}
 \\t- AUTO_UPDATE=${AUTO_UPDATE}
 \\t- WEBSITE_NAME=${WEBSITE_NAME}
 \\t- TEMPLATE=${TEMPLATE}
@@ -42,6 +44,7 @@ if [[ ! -d "$DOCU_PATH"/"$WEBSITE_NAME" ]]; then
     npx @docusaurus/init@next init "$WEBSITE_NAME" "$TEMPLATE" &
     [[ "$!" -gt 0 ]] && wait $!
     ln -s "$DOCU_PATH"/"$WEBSITE_NAME" "$WEB_SRC_PATH"
+    chown -R "$TARGET_UID":"$TARGET_GID" "$DOCU_PATH"
 else
     msg "Docusaurus configuration already exists in the target directory $DOCU_PATH"
 fi

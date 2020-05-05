@@ -71,6 +71,7 @@ awesometic/docusaurus
 ```
 
 Then you have made a website accessible using 80 port with,
+- that website sources having UID 1000 and GID 1000 for non-root editing
 - auto updating enabled
 - being named "MyWebsite"
 - having "classic" template
@@ -81,6 +82,8 @@ If you want to run this image as a daemon with your parameters, try to the follo
 docker run -d --name=docusaurus \
 -p 80:80 \
 -v /where/docusaurus/config/locates:/docusaurus \
+-e TARGET_UID=1000 \
+-e TARGET_GID=1000 \
 -e AUTO_UPDATE=true \
 -e WEBSITE_NAME=Awesometic \
 -e TEMPLATE=classic \
