@@ -49,6 +49,18 @@ else
     msg "Docusaurus configuration already exists in the target directory $DOCU_PATH"
 fi
 
+if [[ ! -d "$DOCU_PATH"/"$WEBSITE_NAME"/node_modules ]]; then
+    msg "Installing node modules..."
+    cd "$DOCU_PATH"/"$WEBSITE_NAME"
+    yarn install &
+    [[ "$!" -gt 0 ]] && wait $!
+    cd ..
+    ln -sf "$DOCU_PATH"/"$WEBSITE_NAME" "$WEB_SRC_PATH"
+    chown -R "$TARGET_UID":"$TARGET_GID" "$DOCU_PATH"
+else
+    msg "Node modules already exist in $DOCU_PATH/$WEBSITE_NAME/node_modules"
+fi
+
 #msg "Will run this Node service as $RUN_MODE mode..."
 #if [[ "$RUN_MODE" == "production" ]]; then
 #    msg "Build current sources..."
