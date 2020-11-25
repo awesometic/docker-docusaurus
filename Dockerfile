@@ -1,9 +1,8 @@
-FROM node:14-alpine
+FROM node:15.3-alpine3.12
 LABEL maintainer="Deokgyu Yang <secugyu@gmail.com>" \
-      description="Lightweight Docusaurus container with Node.js 14 based on Alpine Linux"
+      description="Lightweight Docusaurus container with Node.js 15 based on Alpine Linux 3.12"
 
-RUN apk update
-RUN apk add --no-cache \
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.12/main/ \
     bash bash-completion supervisor \
     autoconf automake build-base libtool nasm
 
