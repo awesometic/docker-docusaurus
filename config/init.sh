@@ -35,13 +35,13 @@ if [[ "$AUTO_UPDATE" == true ]]; then
     if [[ $(find_autoupdate_cron_jobs < <(crontab -l)) -gt 0 ]]; then
         msg "Successfully registered."
     else
-        msg "Register failed with unknown problem. Please issue this on my Github repository." 
+        msg "Register failed with unknown problem. Please issue this on my Github repository."
     fi
 fi
 
 if [[ ! -d "$DOCU_PATH"/"$WEBSITE_NAME" ]]; then
     msg "Install docusaurus..."
-    npx @docusaurus/init@next init "$WEBSITE_NAME" "$TEMPLATE" &
+    npx @docusaurus/init@latest init "$WEBSITE_NAME" "$TEMPLATE" &
     [[ "$!" -gt 0 ]] && wait $!
     ln -s "$DOCU_PATH"/"$WEBSITE_NAME" "$WEB_SRC_PATH"
     chown -R "$TARGET_UID":"$TARGET_GID" "$DOCU_PATH"
