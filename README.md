@@ -9,23 +9,23 @@
 
 ## What is Docusaurus
 
-I'd like to quote the [official website](https://docusaurus.io/).  
+I'd like to quote the [official website](https://docusaurus.io/).
 > Docusaurus makes it easy to maintain Open Source documentation websites.
 
 ## What this project provided for
 
-I hope this project would be useful for those who uses docker for building their server.  
+I hope this project would be useful for those who uses docker for building their server.
 
 ## Features
 
 ### Core packages
-I chose Alpine Linux for make it a **light-weight** service.  
-And I do choose node-alpine as its base image for the sake of some tweaks of Nginx version.  
+I chose Alpine Linux for make it a **light-weight** service.
+And I do choose node-alpine as its base image for the sake of some tweaks of Nginx version.
 
 So this is composed of,
 
-* Alpine Linux 3.11.x
-* Node.js 1.14.x
+* Alpine Linux 3.12
+* Node.js 1.15.3
 
 with,
 
@@ -51,7 +51,7 @@ This is highly recommended that keeping backing-up your docs, always. For the se
 
 ## How can I use this
 
-First of all, it assumes that you have installed Docker on your system.  
+First of all, it assumes that you have installed Docker on your system.
 
 Pull the image from docker hub.
 
