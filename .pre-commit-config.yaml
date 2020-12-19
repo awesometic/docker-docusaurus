@@ -1,0 +1,22 @@
+---
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: mixed-line-ending
+        args: [--fix=auto]
+      - id: no-commit-to-branch
+        args: [--branch, dev, --branch, master]
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v2.1.0
+    hooks:
+      - id: commitizen
+        stages:
+          - commit-msg
