@@ -72,10 +72,12 @@ fi
 #fi
 #[[ "$!" -gt 0 ]] && wait $!
 
-if [[ "$RUN_MODE" != "development" ]]; then
-    msg "Other mode is not supported yet. It will run as a development mode."
-fi
-
 msg "Start supervisord to start Docusaurus..."
-supervisord -c /etc/supervisor/conf.d/supervisord.conf
-
+if [[ "$RUN_MODE" == "development" ]]; then
+    supervisord -c /etc/supervisor/conf.d/supervisord-dev.conf
+elif [[ "$RUN_MODE" == "production" ]]; then
+    supervisord -c /etc/supervisor/conf.d/supervisord-prod.conf
+else
+    msg "Other mode is not supported yet. It will run as a development mode."
+    supervisord -c /etc/supervisor/conf.d/supervisord-dev.conf
+fi
