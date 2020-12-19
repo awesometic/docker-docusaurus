@@ -1,15 +1,14 @@
 # docker-docusaurus
 
-![](https://img.shields.io/docker/automated/awesometic/docusaurus)
-![](https://img.shields.io/docker/build/awesometic/docusaurus)
-![](https://img.shields.io/microbadger/image-size/awesometic/docusaurus)
-![](https://img.shields.io/microbadger/layers/awesometic/docusaurus)
-![](https://img.shields.io/docker/pulls/awesometic/docusaurus)
-![](https://img.shields.io/docker/stars/awesometic/docusaurus)
+![](https://img.shields.io/docker/build/vivumlab/docusaurus)
+![](https://img.shields.io/microbadger/image-size/vivumlab/docusaurus)
+![](https://img.shields.io/microbadger/layers/vivumlab/docusaurus)
+![](https://img.shields.io/docker/pulls/vivumlab/docusaurus)
+![](https://img.shields.io/docker/stars/vivumlab/docusaurus)
 
 ## What is Docusaurus
 
-I'd like to quote the [official website](https://docusaurus.io/).
+I'd like to quote the [official website](https://v2.docusaurus.io/).
 > Docusaurus makes it easy to maintain Open Source documentation websites.
 
 ## What this project provided for
@@ -56,7 +55,7 @@ First of all, it assumes that you have installed Docker on your system.
 Pull the image from docker hub.
 
 ```bash
-docker pull awesometic/docusaurus
+docker pull vivumlab/docusaurus
 ```
 
 ### Basic usage
@@ -75,6 +74,7 @@ Then you have made a website accessible using 80 port with,
 - auto updating enabled
 - being named "MyWebsite"
 - having "classic" template
+- changeable run mode development or production
 
 If you want to run this image as a daemon with your parameters, try to the followings.
 
@@ -87,6 +87,7 @@ docker run -d --name=docusaurus \
 -e AUTO_UPDATE=true \
 -e WEBSITE_NAME=Awesometic \
 -e TEMPLATE=classic \
+-e RUN_MODE=development \ 
 awesometic/docusaurus
 ```
 
@@ -95,11 +96,6 @@ Then when the container runs, just let your browser browses:
 ``` http
 http://localhost/
 ```
-
-## Remains
-
-* [ ] Production mode - Currently, this image always runs Docusaurus as development mode. The development mode allows live-updated as the admin edits whose site but it is not that solid because the visitors also can see the 'being editing' contents. This is acceptable for now but the production mode will be added on the requests.
-* [ ] Support HTTPS - This image doesn't support SSL even if the generated cert files are preprared but you can apply SSL if you have external Let's Encrypt program and/or a reverse proxy server like "linuxserver/letsencrypt".
 
 ## License
 
