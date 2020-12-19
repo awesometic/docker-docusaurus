@@ -1,0 +1,47 @@
+name: "Publish to Registry"
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - released
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+$'
+  schedule:
+    - cron: '0 2 * * 0' # Weekly on Sundays at 02:00
+
+jobs:
+  multi-publish-to-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: vivumlab/docusaurus # list of Docker images to use as base name for tags
+          tag-sha: true # add git short SHA as Docker tag
+      - name: Get VERSION
+        run: |
+          echo "::set-output name=get_version::$(cat VERSION)"
+        id: get_version
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}

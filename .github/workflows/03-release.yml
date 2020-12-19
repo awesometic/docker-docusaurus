@@ -1,0 +1,95 @@
+name: "Release Workflow"
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+
+jobs:
+  release-dry-run:
+    if: "github.ref == 'refs/heads/dev' && !contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+        # Lint Commit Messages
+      - uses: wagoid/commitlint-github-action@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: NPM install
+        run: npm install
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic   # Need an `id` for output variables
+        env:
+          GITHUB_TOKEN: ${{ secrets.DE_PAT }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        with:
+          branch: dev
+          dry_run: true
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/commit-analyzer
+            @semantic-release/exec
+            @semantic-release/git
+            @semantic-release/github
+            @semantic-release/release-notes-generator
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: vivumlab/docusaurus
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tag_semver: true
+  release:
+    if: "github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+        # Lint Commit Messages
+      - uses: wagoid/commitlint-github-action@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: NPM install
+        run: npm install
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic   # Need an `id` for output variables
+        env:
+          GITHUB_TOKEN: ${{ secrets.DE_PAT }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        with:
+          branch: master
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/commit-analyzer
+            @semantic-release/exec
+            @semantic-release/git
+            @semantic-release/github
+            @semantic-release/release-notes-generator
+      - name: Echo release
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
+          echo ${{ steps.semantic.outputs.new_release_major_version }}
+          echo ${{ steps.semantic.outputs.new_release_minor_version }}
+          echo ${{ steps.semantic.outputs.new_release_patch_version }}
+      - name: Mirror action step
+        id: mirror
+        uses: google/mirror-branch-action@v1.0
+        with:
+          github-token: ${{ secrets.DE_PAT }}
+          source: 'master'
+          dest: 'dev'
