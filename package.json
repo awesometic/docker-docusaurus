@@ -1,0 +1,81 @@
+{
+  "name": "docusaurus",
+  "version": "1.0.0",
+  "description": "docker-docusaurus",
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/travis-cli": "^11.0.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.1.1",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "semantic-release": "^17.2.1"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "writerOpts": {
+            "commitsSort": [
+              "subject",
+              "scope"
+            ]
+          }
+        }
+      ],
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "echo ${nextRelease.version} > VERSION"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "package-lock.json",
+            "CHANGELOG.md",
+            "VERSION"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VivumLab/docker-docusaurus.git"
+  },
+  "author": "VivumLab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VivumLab/docker-docusaurus/issues"
+  },
+  "homepage": "https://github.com/VivumLab/docker-docusaurus#readme"
+}
