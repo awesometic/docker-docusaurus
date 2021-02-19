@@ -1,6 +1,6 @@
 # docker-docusaurus
 
-![](https://img.shields.io/badge/multiarch-amd64(x86__64)%2C%20arm64%2C%20armv7%2C%20armv6%2C%20386-lightgrey?style=flat-square)
+![](https://img.shields.io/badge/multiarch-amd64(x86__64)%2C%20arm64%2C%20armv7%2C%20armv6-lightgrey?style=flat-square)
 ![](https://img.shields.io/github/workflow/status/awesometic/docker-docusaurus/buildx?style=flat-square)
 
 ![](https://img.shields.io/docker/image-size/awesometic/docusaurus/latest?style=flat-square)
@@ -48,7 +48,7 @@ It is highly recommended that always do keeping backing-up your docs. For severa
 
 ### Supports multiple architectures
 
-It builds from Github Actions for supporting multiple architectures such as AMD64(x86_64) and ARM64, ARMv7, ARMv6, 386.
+It builds from Github Actions for supporting multiple architectures such as AMD64(x86_64) and ARM64, ARMv7, ARMv6.
 
 So that you can use this on most computers supporting Docker.
 
