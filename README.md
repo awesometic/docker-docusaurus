@@ -1,11 +1,11 @@
 # docker-docusaurus
 
-![](https://img.shields.io/docker/automated/awesometic/docusaurus)
-![](https://img.shields.io/docker/build/awesometic/docusaurus)
-![](https://img.shields.io/microbadger/image-size/awesometic/docusaurus)
-![](https://img.shields.io/microbadger/layers/awesometic/docusaurus)
-![](https://img.shields.io/docker/pulls/awesometic/docusaurus)
-![](https://img.shields.io/docker/stars/awesometic/docusaurus)
+![](https://img.shields.io/badge/multiarch-amd64(x86__64)%2C%20arm64%2C%20armv7%2C%20armv6%2C%20386-lightgrey?style=flat-square)
+![](https://img.shields.io/github/workflow/status/awesometic/docker-docusaurus/buildx?style=flat-square)
+
+![](https://img.shields.io/docker/image-size/awesometic/docusaurus/latest?style=flat-square)
+![](https://img.shields.io/docker/pulls/awesometic/docusaurus?style=flat-square)
+![](https://img.shields.io/docker/stars/awesometic/docusaurus?style=flat-square)
 
 ## What is Docusaurus
 
@@ -19,41 +19,42 @@ I hope this project would be useful for those who uses docker for building their
 ## Features
 
 ### Core packages
+
 I chose Alpine Linux for make it a **light-weight** service.
-And I do choose node-alpine as its base image for the sake of some tweaks of Nginx version.
+And I did choose node-alpine as its base image for the sake of some tweaks of Node.js version.
 
 So this is composed of,
 
-* Alpine Linux 3.12
-* Node.js 1.15.3
+* Alpine Linux 3.13
+* Node.js 15.9.0
 
 with,
 
-* The latest Docusarus
-
-'x' at the last of their version means that they could be upgraded by their maintainer.
+* The latest Docusaurus 2 alpha comes with automatic updating
 
 ### Docusaurus 2
 
-This image runs Docusaurus 2 alpha rather than stable Docusaurus 1. Docusaurus 2 is developing very actively nowadays, so I hope that will be released soon.
-
-I saw that there will be some migration jobs needed when a user upgrades whose Docusarus 1 to Docusaurus 2. So, at this moment I think it is reasonable to publish using Docusaurus 2.
-
-But, as this is an alpha version, I put a automatic update trigger into this image. This can be disabled by setting environment variable like `AUTO_UPDATE=false`. This feature is enabled by default.
-
-### Keep backing-up your docs
-
-This is highly recommended that keeping backing-up your docs, always. For the several reasons, like, this is currently alpha version, or this Docker image's corruption and/or not matured yet, or physically damage, ... You have to back-up your data into your safe place.
-
-### Working screenshot
+This image runs Docusaurus 2 alpha instead of stable Docusaurus 1. Docusaurus 2 is developing very actively currently, so I hope that will be released in the near future.
 
 ![homepage](docs/docusaurus2_homepage.png)
 
+I saw that there will be some migration jobs needed when a user upgrades their Docusarus 1 to the new Docusaurus 2. So, at this moment I think it is reasonable to use Docusaurus 2 for those who about to start constructing their own website.
+
+But, officially, as this is an alpha version yet, I put a automatic update trigger into this image. This can be disabled by setting environment variable like `AUTO_UPDATE=false`. By default this is enabled.
+
+### Keep backing-up your docs
+
+It is highly recommended that always do keeping backing-up your docs. For several reasons such as unexpected physical damage onto your harddrive or software corruptions under development and/or maintenance, you have to back-up your data into your other safe place.
+
+### Supports multiple architectures
+
+It builds from Github Actions for supporting multiple architectures such as AMD64(x86_64) and ARM64, ARMv7, ARMv6, 386.
+
+So that you can use this on most computers supporting Docker.
+
 ## How can I use this
 
-First of all, it assumes that you have installed Docker on your system.
-
-Pull the image from docker hub.
+Pull the image from Docker Hub.
 
 ```bash
 docker pull awesometic/docusaurus
@@ -61,36 +62,43 @@ docker pull awesometic/docusaurus
 
 ### Basic usage
 
-You can just dry run it out with the following command. The '--rm' option removes container when you terminate the interactive session.
+You can just do dry-run this with the following command. The '--rm' option removes container when you terminate the interactive session.
 
 ```bash
 docker run -it --rm \
 -p 80:80 \
--v /where/docusaurus/config/locates:/docusaurus \
+-v /config/dir:/docusaurus \
 awesometic/docusaurus
 ```
 
-Then you have made a website accessible using 80 port with,
-- that website sources having UID 1000 and GID 1000 for non-root editing
-- auto updating enabled
-- being named "MyWebsite"
-- having "classic" template
+This Docker image requires one mapped volume on host computer.
 
-If you want to run this image as a daemon with your parameters, try to the followings.
+* `/docusaurus`: Where the Docusaurus source files located in
+
+**In the first running**, it may takes several minutes to download/prepare the whole source code from the Internet.
+
+Then you have made a basic Docusaurus website having the following characteristics.
+
+* Project sources are having UID 1000 and GID 1000 for non-root editing
+* Enabled auto update
+* Named "MyWebsite"
+* Styled with "classic" template
+
+If you want to run this image as a daemon with your parameters, try using the following command.
 
 ```bash
 docker run -d --name=docusaurus \
 -p 80:80 \
--v /where/docusaurus/config/locates:/docusaurus \
+-v /config/dir:/docusaurus \
 -e TARGET_UID=1000 \
 -e TARGET_GID=1000 \
 -e AUTO_UPDATE=true \
--e WEBSITE_NAME=Awesometic \
+-e WEBSITE_NAME="awesometic-docs" \
 -e TEMPLATE=classic \
 awesometic/docusaurus
 ```
 
-Then when the container runs, just let your browser browses:
+When the container runs, just let your browser browses:
 
 ``` http
 http://localhost/
