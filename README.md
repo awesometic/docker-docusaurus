@@ -75,7 +75,7 @@ This Docker image requires one mapped volume on host computer.
 
 * `/docusaurus`: Where the Docusaurus source files located in
 
-**In the first running**, it may takes several minutes to download/prepare the whole source code from the Internet.
+**In the first running**, it may takes several minutes to download/prepare the whole source code from the Internet. See the [When can I access my website](https://github.com/awesometic/docker-docusaurus#when-can-i-access-my-website) chapter below.
 
 Then you have made a basic Docusaurus website having the following characteristics.
 
@@ -103,6 +103,70 @@ When the container runs, just let your browser browses:
 ``` http
 http://localhost/
 ```
+
+### When can I access my website
+
+In the first running, so to speak, if it ran without configuration files that are created during the first run time before, the users cannot access the newly created Docusaurus website immediately. It will take more than 1 minutes because it downloads the latest Docusaurus source codes at the init process.
+
+See the logs showing when the Docusaurus container runs.
+
+```
+Variables:
+        - UID=1000
+        - GID=1000
+        - AUTO_UPDATE=true
+        - WEBSITE_NAME=awesometic-docs
+        - TEMPLATE=classic
+        - RUN_MODE=development
+/* Register a new cron job for auto updating... */
+/* Successfully registered. */
+/* Install docusaurus... */
+npm WARN exec The following package was not found and will be installed: @docusaurus/init@latest
+
+Creating new Docusaurus project ...
+...
+[4/4] Building fresh packages...
+...
+Success! Created awesometic-docs
+...
+/* Node modules already exist in /docusaurus/awesometic-docs/node_modules */
+/* Start supervisord to start Docusaurus... */
+2021-02-22 03:14:43,572 INFO Set uid to user 0 succeeded
+2021-02-22 03:14:43,584 INFO supervisord started with pid 95
+2021-02-22 03:14:44,589 INFO spawned: 'docusaurus' with pid 97
+yarn run v1.22.5
+$ docusaurus start --port 80 --host 0.0.0.0
+2021-02-22 03:14:46,406 INFO success: docusaurus entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+Starting the development server...
+Docusaurus website is running at: http://localhost:80/
+ℹ Compiling Client
+ℹ ｢wds｣: Project is running at http://0.0.0.0:80/
+ℹ ｢wds｣: webpack output is served from /
+ℹ ｢wds｣: Content not from webpack is served from /docusaurus/awesometic-docs
+ℹ ｢wds｣: 404s will fallback to /index.html
+✔ Client: Compiled successfully in 27.42s
+ℹ Compiling Client
+✔ Client: Compiled successfully in 507.94ms
+```
+
+As we can see the logs, at the first, the init process is downloading the full source codes from the Internet. Then it builds the source codes, and finally it starts with the specified port number. At this moment the logs are,
+
+```
+$ docusaurus start --port 80 --host 0.0.0.0
+2021-02-22 03:14:46,406 INFO success: docusaurus entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+Starting the development server...
+Docusaurus website is running at: http://localhost:80/
+ℹ Compiling Client
+ℹ ｢wds｣: Project is running at http://0.0.0.0:80/
+ℹ ｢wds｣: webpack output is served from /
+ℹ ｢wds｣: Content not from webpack is served from /docusaurus/awesometic-docs
+ℹ ｢wds｣: 404s will fallback to /index.html
+✔ Client: Compiled successfully in 27.42s
+ℹ Compiling Client
+✔ Client: Compiled successfully in 507.94ms
+```
+
+So, even if you cannot access it after running this Docker image, the container itself maybe not broken. Wait 1 or 2 minutes, then you can see the website front.
 
 ## Remains
 
