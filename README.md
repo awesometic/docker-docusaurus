@@ -25,22 +25,22 @@ And I did choose node-alpine as its base image for the sake of some tweaks of No
 
 So this is composed of,
 
-* Alpine Linux 3.13
-* Node.js 15.9.0
+* Alpine Linux 3.14
+* Node.js 16.7.0
 
 with,
 
-* The latest Docusaurus 2 alpha comes with automatic updating
+* The latest Docusaurus 2 beta comes with automatic updating
 
 ### Docusaurus 2
 
-This image runs Docusaurus 2 alpha instead of stable Docusaurus 1. Docusaurus 2 is developing very actively currently, so I hope that will be released in the near future.
+This image runs Docusaurus 2 beta instead of stable Docusaurus 1. Docusaurus 2 is developing very actively currently, so I hope that will be released in the near future.
 
 ![homepage](docs/docusaurus2_homepage.png)
 
 I saw that there will be some migration jobs needed when a user upgrades their Docusarus 1 to the new Docusaurus 2. So, at this moment I think it is reasonable to use Docusaurus 2 for those who about to start constructing their own website.
 
-But, officially, as this is an alpha version yet, I put a automatic update trigger into this image. This can be disabled by setting environment variable like `AUTO_UPDATE=false`. By default this is enabled.
+But, officially, as this is an beta version yet, I put a automatic update trigger into this image. This can be disabled by setting environment variable like `AUTO_UPDATE=false`. By default this is enabled.
 
 ### Keep backing-up your docs
 
