@@ -22,10 +22,11 @@ WORKDIR /docusaurus
 ADD config/init.sh /
 ADD config/auto_update_crontab.txt /
 ADD config/auto_update_job.sh /
+ADD config/run.sh /
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Set files permission
-RUN chmod a+x /init.sh /auto_update_job.sh
+RUN chmod a+x /init.sh /auto_update_job.sh /run.sh
 
 EXPOSE 80
 VOLUME [ "/docusaurus" ]

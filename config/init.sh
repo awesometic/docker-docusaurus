@@ -61,17 +61,6 @@ else
     msg "Node modules already exist in $DOCU_PATH/$WEBSITE_NAME/node_modules"
 fi
 
-#msg "Will run this Node service as $RUN_MODE mode..."
-#if [[ "$RUN_MODE" == "production" ]]; then
-#    msg "Build current sources..."
-#    cd "$WEB_SRC_PATH" || msg "There's no directory named $WEB_SRC_PATH. Program will be closed." && exit
-#    yarn build &
-#elif [[ "$RUN_MODE" != "production" ]] && [[ "$RUN_MODE" != "development" ]]; then
-#    msg "This "$RUN_MODE" mode is unknown as a default Node.js service mode. You should do know what you do."
-#    yarn "$RUN_MODE" &
-#fi
-#[[ "$!" -gt 0 ]] && wait $!
-
 if [[ "$RUN_MODE" != "development" ]]; then
     msg "Other mode is not supported yet. It will run as a development mode."
 fi
