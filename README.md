@@ -26,7 +26,7 @@ And I did choose node-alpine as its base image for the sake of some tweaks of No
 So this is composed of,
 
 * Alpine Linux 3.14
-* Node.js 16.7.0
+* Node.js 16.11.1
 
 with,
 
@@ -104,6 +104,59 @@ When the container runs, just let your browser browses:
 http://localhost/
 ```
 
+### Production mode
+
+This image runs in development mode by default so that you can see the changes right after you edit the documents.
+
+But you can build the source files by starting this image as production mode. You can do this by adding the `RUN_MODE` environment variable when you create a container. See the commands below.
+
+```bash
+docker run -d --name=docusaurus \
+-p 80:80 \
+-v /config/dir:/docusaurus \
+-e TARGET_UID=1000 \
+-e TARGET_GID=1000 \
+-e AUTO_UPDATE=true \
+-e WEBSITE_NAME="awesometic-docs" \
+-e TEMPLATE=classic \
+-e RUN_MODE=production \
+awesometic/docusaurus
+```
+
+Then the logs shows like the below.
+
+```shell
+/* Will run this Node service as production mode... */
+/* Build current sources... */
+yarn run v1.22.15
+$ docusaurus serve --build --port 80 --host 0.0.0.0
+2021-10-21 07:18:25,121 INFO success: docusaurus entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+
+[en] Creating an optimized production build...
+ℹ Compiling Client
+ℹ Compiling Server
+✔ Client: Compiled successfully in 12.17s
+✔ Server: Compiled successfully in 14.75s
+Success! Generated static files in "build".
+
+Use `npm run serve` command to test your build locally.
+
+
+   ┌────────────────────────────────────────────────────────┐
+   │                                                        │
+   │   Serving "build" directory at "http://0.0.0.0:80/".   │
+   │                                                        │
+   └────────────────────────────────────────────────────────┘
+
+
+```
+
+If the build is completed flawlessly, you can find the `build` directory under the directory you selected for the website sources of the Docusaurus service.
+
+The built-in web server serves built web sources but you also can serve that from the other web servers like Nginx or Apache.
+
+The built files will be updated to have the latest contents whenever you enter the `docker restart [container-id]` command.
+
 ### When can I access my website
 
 In the first running, so to speak, if it ran without configuration files that are created during the first run time before, the users cannot access the newly created Docusaurus website immediately. It will take more than 1 minutes because it downloads the latest Docusaurus source codes at the init process.
@@ -170,7 +223,7 @@ So, even if you cannot access it after running this Docker image, the container 
 
 ## Remains
 
-* [ ] Production mode - Currently, this image always runs Docusaurus as development mode. The development mode allows live-updated as the admin edits whose site but it is not that solid because the visitors also can see the 'being editing' contents. This is acceptable for now but the production mode will be added on the requests.
+* [x] Production mode - Currently, this image always runs Docusaurus as development mode. The development mode allows live-updated as the admin edits whose site but it is not that solid because the visitors also can see the 'being editing' contents. This is acceptable for now but the production mode will be added on the requests.
 * [ ] Support HTTPS - This image doesn't support SSL even if the generated cert files are preprared but you can apply SSL if you have external Let's Encrypt program and/or a reverse proxy server like "linuxserver/letsencrypt".
 
 ## License
