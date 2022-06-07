@@ -26,7 +26,7 @@ And I did choose node-alpine as its base image for the sake of some tweaks of No
 So this is composed of,
 
 * Alpine Linux 3.15
-* Node.js 17.4.0
+* Node.js 18.3.0
 
 with,
 
