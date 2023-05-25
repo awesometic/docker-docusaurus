@@ -1,7 +1,7 @@
 # docker-docusaurus
 
 ![](https://img.shields.io/badge/multiarch-amd64(x86__64)%2C%20arm64%2C%20armv7%2C%20armv6-lightgrey?style=flat-square)
-![](https://img.shields.io/github/workflow/status/awesometic/docker-docusaurus/buildx?style=flat-square)
+![](https://img.shields.io/github/actions/workflow/status/awesometic/docker-docusaurus/buildx.yml?branch=master?style=flat-square)
 
 ![](https://img.shields.io/docker/image-size/awesometic/docusaurus/latest?style=flat-square)
 ![](https://img.shields.io/docker/pulls/awesometic/docusaurus?style=flat-square)
