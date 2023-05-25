@@ -1,4 +1,4 @@
-FROM node:current-alpine3.16
+FROM node:20-alpine3.17
 LABEL maintainer="Deokgyu Yang <secugyu@gmail.com>" \
       description="Lightweight Docusaurus container with Node.js based on Alpine Linux"
 
